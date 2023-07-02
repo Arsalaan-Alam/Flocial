@@ -1,7 +1,15 @@
 import './globals.css'
+import { Montserrat } from 'next/font/google'
 import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+import Navbar from './navbar'
+
+const montserrat = Montserrat({
+  weight: ['400','500','600','700','800'],
+  subsets: ['latin'],
+})
+
+ 
 
 export const metadata = {
   title: 'Flocial',
@@ -10,8 +18,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    
+    <>
+      <Navbar />
+      <body className={montserrat.className}>{children}</body>
+    </>
   )
 }
