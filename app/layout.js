@@ -15,7 +15,6 @@ export const metadata = {
   title: 'Flocial',
   description: 'First ever DSNP on flow',
 }
-
 export default function RootLayout({ children }) {
   return (
     
