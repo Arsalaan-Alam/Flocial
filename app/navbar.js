@@ -9,7 +9,7 @@ export default function Navbar(){
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <a href="/" class="flex items-center">
       <img src="https://media.discordapp.net/attachments/1123188100294778960/1125057735365513246/flowscl-fotor-2023070219425.png?width=428&height=428" class="h-11 mr-3" alt="Logo" />
-      <span class="self-center text-3xl font-bold whitespace-nowrap dark:text-white">Flocial</span>
+      <span class="self-center text-3xl font-bold whitespace-nowrap dark:text-green text-green-400">Flocial</span>
   </a>
   <div class="flex md:order-2">
       <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Connect Wallet </button>
