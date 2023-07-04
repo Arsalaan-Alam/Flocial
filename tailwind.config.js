@@ -15,6 +15,9 @@ module.exports = {
       fontFamily: {
 				inter: ['inter', 'serif'],
 			},
+      minWidth: {
+        '3/4': '75%',
+      }
     },
   },
   plugins: [],
