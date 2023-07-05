@@ -16,7 +16,7 @@ module.exports = {
 				inter: ['inter', 'serif'],
 			},
       minWidth: {
-        '3/4': '75%',
+        '3/5': '60%',
       }
     },
   },
