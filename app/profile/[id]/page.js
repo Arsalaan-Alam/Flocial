@@ -2,6 +2,7 @@
 
 import * as fcl from "@onflow/fcl";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function UserProfile({params}){
    
@@ -14,14 +15,12 @@ export default function UserProfile({params}){
                         <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="profileimg" className=""/>
                        
                         <br></br>
-                       <div className="grid grid-cols-2">
+                      <Link href="/update"> 
                        <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                            Update
+                            Update Profile
                             </button>
-                            <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                            Edit
-                            </button>
-                        </div>
+                            </Link>
+                         
                         </div>
                     </div>
                     
