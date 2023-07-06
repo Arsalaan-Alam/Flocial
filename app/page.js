@@ -1,7 +1,42 @@
+"use client"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Head from 'next/head'
+import "@/flow/config";
+import { useState, useEffect } from "react";
+import * as fcl from "@onflow/fcl";
 
 export default function Home() {
+ const [user, setUser] = useState({ loggedIn: null });
+  const router = useRouter();
+  
+  useEffect(() => {
+    const encodedAddress = encodeURIComponent(user?.addr);
+    const profileAddressHref = `/profile/${encodedAddress}`;
+    if (user.loggedIn) {
+      router.push(profileAddressHref);
+    }
+  }, [user.loggedIn]);
+
+  useEffect(() => fcl.currentUser.subscribe(setUser), []);
+
+  const AuthedState = () => {
+    return (
+      <div>
+       Connected Successfully! Redirecting...
+      </div>
+    );
+  }
+
+  const UnauthenticatedState = () => {
+    return (
+      <div>
+        <button onClick={fcl.logIn} className="bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold">
+          Connect Wallet
+        </button>
+      </div>
+    );
+  }
   return (
     <section className="relative">
 
@@ -25,15 +60,14 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="text-center pb-12 md:pb-16">
+          
             <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out"> Flow's first-ever  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">social protocol.</span></h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">Flocial is a decentralized social networking protocol for Flow. We connect and maintain uniformity accross games, apps, assets & everything on Flow.</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
-                <Link href="/signup">
-                  <button class="bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                  Connect Wallet
-                  </button>
-                  </Link>
+              {user.loggedIn ? <AuthedState /> : <UnauthenticatedState /> }
+                {/* <Link href="/signup"> 
+    </Link> */}
               </div>
             </div>
           </div>         

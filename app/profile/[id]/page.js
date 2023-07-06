@@ -1,4 +1,15 @@
+"use client"
+
+import * as fcl from "@onflow/fcl";
+import { useRouter } from "next/navigation";
+
 export default function UserProfile({params}){
+    const router = useRouter();
+    const handleLogout = () => {
+        fcl.unauthenticate();
+        router.push("/");
+  };
+  
     return(
         <div className="flex items-center justify-center mt-12">
             <div className="font-bold rounded-lg border shadow-xl bg-base-100 min-w-3/5 p-10 bg-grey-100 max-w-xl">
@@ -9,8 +20,8 @@ export default function UserProfile({params}){
                        
                         <br></br>
                        
-                        <button class="bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                            Change
+                        <button onClick={handleLogout} class="bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
+                            Logout
                             </button>
                         </div>
                     </div>
