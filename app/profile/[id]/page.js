@@ -4,12 +4,7 @@ import * as fcl from "@onflow/fcl";
 import { useRouter } from "next/navigation";
 
 export default function UserProfile({params}){
-    const router = useRouter();
-    const handleLogout = () => {
-        fcl.unauthenticate();
-        router.push("/");
-  };
-  
+   
     return(
         <div className="flex items-center justify-center mt-12">
             <div className="font-bold rounded-lg border shadow-xl bg-base-100 min-w-3/5 p-10 bg-grey-100 max-w-xl">
@@ -19,10 +14,14 @@ export default function UserProfile({params}){
                         <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="profileimg" className=""/>
                        
                         <br></br>
-                       
-                        <button onClick={handleLogout} class="bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                            Logout
+                       <div className="grid grid-cols-2">
+                       <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
+                            Update
                             </button>
+                            <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
+                            Edit
+                            </button>
+                        </div>
                         </div>
                     </div>
                     
