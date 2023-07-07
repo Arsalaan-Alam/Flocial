@@ -66,18 +66,13 @@ export default function Home() {
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">Flocial is a decentralized social networking protocol for Flow. We connect and maintain uniformity accross games, apps, assets & everything on Flow.</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
               {user.loggedIn ? <AuthedState /> : <UnauthenticatedState /> }
-                {/* <Link href="/signup"> 
-    </Link> */}
+             
               </div>
             </div>
           </div>         
         </div>
       </div>
     </section>
-   /* <div className="flex items-center justify-center p-24">
-     
-    </div> */
   
-    
   )
 }
