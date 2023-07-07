@@ -3,9 +3,37 @@
 import * as fcl from "@onflow/fcl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function UserProfile({params}){
+
+   {/*
+     fcl.config()
+    .put("accessNode.api", "https://access-testnet.onflow.org")
+    .put('decoder.Type', val => val.staticType)
+    .put('decoder.Enum', val => Number(val.fields[0].value.value))
+
+    useEffect(() => {
+        getUser();
+      }, []);
+    const getUser = async () => {
+       
+    const res = await fcl.send([
+      fcl.script`
+        import Core from 0xf386a98db99081f1
+
+        pub fun main(): Core.User? {
+        
+      // Resolve the user
+      return Core.resolveUser(_user: fcl.currentUser.address)
+      }
+      `
+    ]).then(fcl.decode)
+    console.log(res)
+    
+  }
    
+*/}
     return(
         <div className="flex items-center justify-center mt-12">
             <div className="font-bold rounded-lg border shadow-xl bg-base-100 min-w-3/5 p-10 bg-grey-100 max-w-xl">

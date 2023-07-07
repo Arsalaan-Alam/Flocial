@@ -36,9 +36,9 @@ export default function SignupPage () {
   };
 
   return (
-    <div className="flex items-center justify-center mt-10">
+    <div className="flex items-center justify-center mt-12">
         <form className="w-full max-w-lg" method="POST">
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap -mx-3 mb-2">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -67,7 +67,7 @@ export default function SignupPage () {
   />
 </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap -mx-3 mb-2">
 <div className="w-full px-3">
   <label
     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -85,7 +85,7 @@ export default function SignupPage () {
  
 </div>
 </div>
-<div className="flex flex-wrap -mx-3 mb-6">
+<div className="flex flex-wrap -mx-3 mb-2">
 <div className="w-full px-3">
   <label
     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -103,7 +103,7 @@ export default function SignupPage () {
   
 </div>
 </div>
-<div className="flex flex-wrap -mx-3 mb-6">
+<div className="flex flex-wrap -mx-3 mb-2">
           <div className="w-full px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Avatar
