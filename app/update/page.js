@@ -5,10 +5,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
+import "@/flow/config";
 
 export default function SignupPage () {
 
-  const [user, setUser] = useState({ addr: "" });
+  const [fullName, setFullName] = useState('')
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [desc, setDesc] = useState('')
+  
+  const [user, setUser] = useState({ addr: ""})
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -16,15 +22,45 @@ export default function SignupPage () {
     fcl.currentUser().subscribe((user) => setUser(user));
   }, []);
 
-  const handleSubmit = async () => {
-    // Perform form submission logic here, something like this ig
-    /*  const [user, setUser] = React.useState({
-    first-name: "",
-    username: "",
-    email: "",
-    description: "",
-  })
-  */
+  const handleSubmit = async () => {    
+    if (!fullName && !username && !email) {
+      throw new Error('Input empty...');
+    }
+    
+    console.log(user)
+    console.log(fullName)
+    
+    
+    const txnId = await fcl.mutate({
+      cadence: `
+        import Core from 0xf386a98db99081f1
+        
+        transaction (_username: String, _fullName: String, _email: String, _visibility: Bool) {          
+          prepare(acct1: AuthAccount) {}
+          execute {            
+            Core.addUser(_username: _username, _fullName: _fullName, _email: _email)
+            Core.mutateUserVisibility(_visibility: _visibility)            
+          }
+        }
+      `,
+      args: (arg, t) => [
+        arg(username, t.String),
+        arg(fullName, t.String),
+        arg(email, t.String),
+        arg(true, t.Bool),
+      ],
+      proposer: fcl.currentUser,
+      payer: fcl.currentUser,      
+      authorization: [fcl.currentUser],
+      limit: 50
+    })
+
+    console.log('TxnID ',txnId)
+    
+    const txn = await fcl.tx(txnId).onceSealed()
+    //getTxn(txnId)
+    console.log(txn)
+    
     const encodedAddress = encodeURIComponent(user?.addr);
     const profileAddressHref = `/profile/${encodedAddress}`;
     router.push(profileAddressHref);
@@ -47,7 +83,8 @@ export default function SignupPage () {
     className="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500 focus:bg-white"
     id="full-name"
     type="text"
-    // value={user.full-name}
+    value={fullName}
+    onChange={(e) => setFullName(e.target.value)}
     placeholder="Jane Doe"
   />  
 </div>
@@ -60,8 +97,9 @@ export default function SignupPage () {
   </label>
   <input
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-    id="username"
-    // value={user.username}
+    id="username"    
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
     type="text"
     placeholder="abc@123"
   />
@@ -78,7 +116,8 @@ export default function SignupPage () {
   <input
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     id="email"
-     // value={user.email}
+    onChange={(e) => setEmail(e.target.value)}
+    value={email}
     type="email"
     placeholder="janedoe@abc.com"
   />
@@ -97,7 +136,8 @@ export default function SignupPage () {
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     id="description"
     type="name"
-    // value={user.description}
+    onChange={(e) => setDesc(e.target.value)}
+    value={desc}
     placeholder="Describe yourself in a tweet!"
   />
   

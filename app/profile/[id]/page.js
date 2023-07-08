@@ -3,37 +3,34 @@
 import * as fcl from "@onflow/fcl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState, useParams } from "react";
+import { Router } from "next/router";
+import "@/flow/config";
 
 export default function UserProfile({params}){
 
-   {/*
-     fcl.config()
-    .put("accessNode.api", "https://access-testnet.onflow.org")
-    .put('decoder.Type', val => val.staticType)
-    .put('decoder.Enum', val => Number(val.fields[0].value.value))
-
-    useEffect(() => {
-        getUser();
-      }, []);
-    const getUser = async () => {
-       
-    const res = await fcl.send([
-      fcl.script`
-        import Core from 0xf386a98db99081f1
-
-        pub fun main(): Core.User? {
-        
-      // Resolve the user
-      return Core.resolveUser(_user: fcl.currentUser.address)
-      }
-      `
-    ]).then(fcl.decode)
-    console.log(res)
-    
-  }
+    const [fullName, setFullName] = useState('')
    
-*/}
+    useEffect(() => {        
+        console.log(params.id)
+        getProfileData(params.id)
+    })
+
+    const getProfileData = async (addr) => { 
+               
+        const res = await fcl.query({
+            cadence: `
+                import Core from 0xf386a98db99081f1
+    
+                pub fun main(_user: Address): Core.User? {
+                    return Core.resolveUser(_user: _user)
+                }
+            `,
+            args: (arg, t) => [arg(addr, t.Address)]
+        })            
+        console.log('Response ',res)
+    }    
+   
     return(
         <div className="flex items-center justify-center mt-12">
             <div className="font-bold rounded-lg border shadow-xl bg-base-100 min-w-3/5 p-10 bg-grey-100 max-w-xl">
@@ -96,8 +93,6 @@ export default function UserProfile({params}){
                         <div className="ml-11 mt-2 font-normal text-sm">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                         </div>
-                            
-                            
                         </div>
                     </div>
                 </div>
