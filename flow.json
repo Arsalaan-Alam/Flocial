@@ -1,4 +1,7 @@
 {
+	"contracts": {
+		"Profile": "./cadence/Profile.cdc"
+	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
 		"mainnet": "access.mainnet.nodes.onflow.org:9000",
@@ -9,6 +12,20 @@
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
 			"key": "22ea0733f4f5cdfab0fbedc773c27a3193907ad04d4893780b92dffb4590aa02"
+		},
+		"testnet": {
+			"address": "f41fd3cb80a5dce4",
+			"key": {
+				"type": "file",
+				"location": "testnet.pkey"
+			}
+		}
+	},
+	"deployments": {
+		"testnet": {
+			"testnet": [
+				"Profile"
+			]
 		}
 	}
 }

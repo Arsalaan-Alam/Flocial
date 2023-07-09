@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
 
 export default function Home() {
- const [user, setUser] = useState({ loggedIn: null });
+  const [user, setUser] = useState({ loggedIn: null });
   const router = useRouter();
-  
+ 
   useEffect(() => {
     const encodedAddress = encodeURIComponent(user?.addr);
     const profileAddressHref = `/profile/${encodedAddress}`;

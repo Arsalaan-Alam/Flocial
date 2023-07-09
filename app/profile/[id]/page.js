@@ -9,26 +9,41 @@ import "@/flow/config";
 
 export default function UserProfile({params}){
 
-    const [fullName, setFullName] = useState('')
+    //useEffect(() => fcl.currentUser.subscribe(setUser), []);
+
+    const [profile, setProfile] = useState({
+        username: "username",
+        fullname: "Full Name",
+        avatar: "http://example.com",
+        email: "full@name.com",
+        desc: "Brief description"
+    })
    
     useEffect(() => {        
         console.log(params.id)
-        getProfileData(params.id)
-    })
+        getProfileData()
+    }, [])
 
-    const getProfileData = async (addr) => { 
+    const getProfileData = async () => { 
                
-        const res = await fcl.query({
+        const profile = await fcl.query({
             cadence: `
-                import Core from 0xf386a98db99081f1
-    
-                pub fun main(_user: Address): Core.User? {
-                    return Core.resolveUser(_user: _user)
+                import Profile from 0xf41fd3cb80a5dce4
+
+                pub fun main(address: Address): Profile.ReadOnly? {
+                return Profile.read(address)
                 }
             `,
-            args: (arg, t) => [arg(addr, t.Address)]
+            args: (arg, t) => [arg(params.id, t.Address)]
         })            
-        console.log('Response ',res)
+        console.log('Response ', profile)
+        setProfile({
+            username: profile.username,
+            fullname: profile.fullname,
+            avatar: profile.avatar,
+            email: profile.email,
+            desc: profile.desc
+        })
     }    
    
     return(
@@ -56,7 +71,7 @@ export default function UserProfile({params}){
                                 Full Name:
                             </div>
                             <div className="col-span-3 p-1 text-right mr-8 font-semibold">
-                                Arsalaan Alam
+                                {profile.fullname}
                             </div>
 
                             </div>
@@ -65,7 +80,7 @@ export default function UserProfile({params}){
                                 Username:
                             </div>
                             <div className="col-span-3 p-1 text-right mr-8 font-semibold">
-                                arsalaan@100
+                                {profile.username}
                             </div>
                             
 
@@ -84,14 +99,14 @@ export default function UserProfile({params}){
                                 Email:
                             </div>
                             <div className="col-span-3 p-1 text-right mr-8 font-semibold">
-                                studyfreak1234@gmail.com
+                                {profile.email}
                             </div>
 
                             </div>
 
                         <div className="ml-11 mt-2">Description:</div>
                         <div className="ml-11 mt-2 font-normal text-sm">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        {profile.desc}
                         </div>
                         </div>
                     </div>

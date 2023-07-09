@@ -11,6 +11,7 @@ export default function SignupPage () {
 
   const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
+  const [avatar, setAvatar] = useState('')
   const [email, setEmail] = useState('')
   const [desc, setDesc] = useState('')
   
@@ -32,6 +33,7 @@ export default function SignupPage () {
     
     
     const txnId = await fcl.mutate({
+      /*
       cadence: `
         import Core from 0xf386a98db99081f1
         
@@ -42,12 +44,36 @@ export default function SignupPage () {
             Core.mutateUserVisibility(_visibility: _visibility)            
           }
         }
+      `,*/
+      cadence: `
+        import Profile from 0xf41fd3cb80a5dce4
+        
+        transaction (fullname: String, username: String, email: String, desc: String) {
+          prepare(acct: AuthAccount) {
+            if (!Profile.check(acct.address)){
+              acct.save(<- Profile.new(), to: Profile.privatePath)
+              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+                .setEmail(email)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setFullname(fullname)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setUsername(username)              
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setDesc(desc)
+            }
+          }
+        }
       `,
       args: (arg, t) => [
-        arg(username, t.String),
-        arg(fullName, t.String),
-        arg(email, t.String),
-        arg(true, t.Bool),
+        arg(email, t.String),        
+        arg(fullName, t.String),   
+        arg(username, t.String),           
+        arg(desc, t.String),   
       ],
       proposer: fcl.currentUser,
       payer: fcl.currentUser,      
@@ -60,10 +86,12 @@ export default function SignupPage () {
     const txn = await fcl.tx(txnId).onceSealed()
     //getTxn(txnId)
     console.log(txn)
-    
     const encodedAddress = encodeURIComponent(user?.addr);
     const profileAddressHref = `/profile/${encodedAddress}`;
-    router.push(profileAddressHref);
+    if (user.loggedIn) {
+      router.push(profileAddressHref);
+    }
+    
   };
 
   const handleFileChange = (event) => {
