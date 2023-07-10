@@ -36,6 +36,7 @@ export default function SignupPage () {
     setUsername(profile.username)
     setEmail(profile.email)
     setDesc(profile.desc)    
+    setAvatar(profile.avatar)
 }
 
   useEffect(() => {
@@ -209,7 +210,7 @@ export default function SignupPage () {
             <input
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     id="avatar"    
-    value={avatar}
+    //value={avatar}
     type="text"
     placeholder="Paste your Avatar's URL."
   />
