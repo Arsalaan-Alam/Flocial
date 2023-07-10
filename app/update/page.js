@@ -20,7 +20,7 @@ export default function SignupPage () {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const getExistingProfileData = async (addr) => { 
-                   
+    
     const profile = await fcl.query({
         cadence: `
             import Profile from 0xf41fd3cb80a5dce4
@@ -41,60 +41,68 @@ export default function SignupPage () {
 
   useEffect(() => {
     fcl.currentUser().subscribe((user) => setUser(user));
-    console.log('User address : ',user.addr)
-    //getExistingProfileData(user.addr)
+    console.log(user.addr)
+    getExistingProfileData(user.addr)
   }, []);
 
   const handleSubmit = async () => {    
     if (!fullName && !username && !email) {
       throw new Error('Input empty...');
-    }    
+    }
+    
     console.log(user)
-    const txnId = await fcl.mutate({    
+    //console.log(fullName + ' ' + username + ' ' + email)
+
+    const txnId = await fcl.mutate({     
       cadence: `
         import Profile from 0xf41fd3cb80a5dce4
         
-        transaction (username: String, fullname: String, , email: String, desc: String) {
+        transaction (username: String, src: String, fullname: String, email: String, desc: String) {
           
           prepare(acct: AuthAccount) {
             if (!Profile.check(acct.address)){
               acct.save(<- Profile.new(), to: Profile.privatePath)
-              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)  
-
+              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
               acct
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-              .setUsername(username)      
-            acct
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-              .setFullname(fullname)
-            acct
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-              .setEmail(email)            
-            acct
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-              .setDesc(desc) 
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setUsername(username)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setAvatar(src)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setFullname(fullname)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+                .setEmail(email)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setDesc(desc)              
             } else {
-                acct
-                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                  .setUsername(username)      
-                acct
-                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                  .setFullname(fullname)
-                acct
-                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-                  .setEmail(email)            
-                acct
-                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                  .setDesc(desc)   
-            }
-                                             
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setUsername(username)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setAvatar(src)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setFullname(fullname)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+                .setEmail(email)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setDesc(desc)
+            }            
           }          
         }
       `,
       args: (arg, t) => [
-        arg(username, t.String),             
-        arg(fullName, t.String),   
-        arg(email, t.String),      
+        arg(username, t.String),
+        arg(avatar, t.String),
+        arg(fullName, t.String),        
+        arg(email, t.String),   
         arg(desc, t.String),   
       ],
       proposer: fcl.currentUser,
@@ -110,8 +118,9 @@ export default function SignupPage () {
     console.log(txn)
     const encodedAddress = encodeURIComponent(user?.addr);
     const profileAddressHref = `/profile/${encodedAddress}`;
-    router.push(profileAddressHref);
-    
+    if (user.loggedIn) {
+      router.push(profileAddressHref);
+    }
     
   };
 
@@ -200,6 +209,7 @@ export default function SignupPage () {
     id="avatar"    
     //value={avatar}
     type="text"
+    onChange={(e) => setAvatar(e.target.value)}
     placeholder="Paste your Avatar's URL."
   />
 

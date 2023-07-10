@@ -26,11 +26,6 @@
 			"testnet": [
 				"Profile"
 			]
-		},
-		"emulator" : {
-			"emulator-account": [
-				"Profile"
-			]
 		}
 	}
 }
