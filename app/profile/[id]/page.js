@@ -55,11 +55,11 @@ export default function UserProfile({params}){
                         <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="profileimg" className=""/>
                        
                         <br></br>
-                      <Link href="/update"> 
-                       <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
-                            Update Profile
+                      <Link href="/update/"> 
+                            <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
+                                Update Profile
                             </button>
-                            </Link>
+                        </Link>
                          
                         </div>
                     </div>
