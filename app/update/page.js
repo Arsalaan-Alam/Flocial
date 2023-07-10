@@ -19,8 +19,28 @@ export default function SignupPage () {
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const getExistingProfileData = async () => { 
+               
+    const profile = await fcl.query({
+        cadence: `
+            import Profile from 0xf41fd3cb80a5dce4
+
+            pub fun main(address: Address): Profile.ReadOnly? {
+            return Profile.read(address)
+            }
+        `,
+        args: (arg, t) => [arg(user.addr, t.Address)]
+    })            
+    console.log('Response ', profile)
+    setFullName(profile.fullname)
+    setUsername(profile.username)
+    setEmail(profile.email)
+    setDesc(profile.desc)    
+}
+
   useEffect(() => {
     fcl.currentUser().subscribe((user) => setUser(user));
+    getExistingProfileData()
   }, []);
 
   const handleSubmit = async () => {    
@@ -121,7 +141,7 @@ export default function SignupPage () {
     id="full-name"
     type="text"
     value={fullName}
-    onChange={(e) => setFullName(e.target.value)}
+    onChange={(e) => setFullName(e.target.value)}    
     placeholder="Jane Doe"
   />  
 </div>
@@ -189,7 +209,7 @@ export default function SignupPage () {
             <input
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     id="avatar"    
-     // value={avatar}
+    value={avatar}
     type="text"
     placeholder="Paste your Avatar's URL."
   />
