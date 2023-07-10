@@ -19,8 +19,8 @@ export default function SignupPage () {
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const getExistingProfileData = async () => { 
-               
+  const getExistingProfileData = async (addr) => { 
+                   
     const profile = await fcl.query({
         cadence: `
             import Profile from 0xf41fd3cb80a5dce4
@@ -29,7 +29,7 @@ export default function SignupPage () {
             return Profile.read(address)
             }
         `,
-        args: (arg, t) => [arg(user.addr, t.Address)]
+        args: (arg, t) => [arg(addr, t.Address)]
     })            
     console.log('Response ', profile)
     setFullName(profile.fullname)
@@ -40,71 +40,60 @@ export default function SignupPage () {
 
   useEffect(() => {
     fcl.currentUser().subscribe((user) => setUser(user));
-    getExistingProfileData()
+    console.log('User address : ',user.addr)
+    //getExistingProfileData(user.addr)
   }, []);
 
   const handleSubmit = async () => {    
     if (!fullName && !username && !email) {
       throw new Error('Input empty...');
-    }
-    
+    }    
     console.log(user)
-
-    const txnId = await fcl.mutate({
-      /*
-      cadence: `
-        import Core from 0xf386a98db99081f1
-        
-        transaction (_username: String, _fullName: String, _email: String, _visibility: Bool) {          
-          prepare(acct1: AuthAccount) {}
-          execute {            
-            Core.addUser(_username: _username, _fullName: _fullName, _email: _email)
-            Core.mutateUserVisibility(_visibility: _visibility)            
-          }
-        }
-      `,*/
+    const txnId = await fcl.mutate({    
       cadence: `
         import Profile from 0xf41fd3cb80a5dce4
         
-        transaction (fullname: String, username: String, email: String, desc: String) {
+        transaction (username: String, fullname: String, , email: String, desc: String) {
           
           prepare(acct: AuthAccount) {
             if (!Profile.check(acct.address)){
               acct.save(<- Profile.new(), to: Profile.privatePath)
-              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
+              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)  
+
               acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-                .setEmail(email)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setFullname(fullname)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setUsername(username)              
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)              
+              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+              .setUsername(username)      
+            acct
+              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+              .setFullname(fullname)
+            acct
+              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+              .setEmail(email)            
+            acct
+              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+              .setDesc(desc) 
             } else {
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-                .setEmail(email)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setFullname(fullname)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setUsername(username)              
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)
-            }            
+                acct
+                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                  .setUsername(username)      
+                acct
+                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                  .setFullname(fullname)
+                acct
+                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+                  .setEmail(email)            
+                acct
+                  .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                  .setDesc(desc)   
+            }
+                                             
           }          
         }
       `,
       args: (arg, t) => [
-        arg(email, t.String),        
+        arg(username, t.String),             
         arg(fullName, t.String),   
-        arg(username, t.String),           
+        arg(email, t.String),      
         arg(desc, t.String),   
       ],
       proposer: fcl.currentUser,
@@ -120,9 +109,8 @@ export default function SignupPage () {
     console.log(txn)
     const encodedAddress = encodeURIComponent(user?.addr);
     const profileAddressHref = `/profile/${encodedAddress}`;
-    if (user.loggedIn) {
-      router.push(profileAddressHref);
-    }
+    router.push(profileAddressHref);
+    
     
   };
 
