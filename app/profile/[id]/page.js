@@ -52,7 +52,7 @@ export default function UserProfile({params}){
                 <div className="grid grid-cols-10">
                     <div className="col-span-3 p-2 flex items-center justify-center">
                        <div className="flex flex-col items-center justify-center">
-                        <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="profileimg" className=""/>
+                        <img src={profile.avatar} alt="profileimg" className=""/>
                        
                         <br></br>
                       <Link href="/update/"> 
