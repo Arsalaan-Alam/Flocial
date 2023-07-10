@@ -47,6 +47,7 @@ export default function SignupPage () {
         import Profile from 0xf41fd3cb80a5dce4
         
         transaction (fullname: String, username: String, email: String, desc: String) {
+          
           prepare(acct: AuthAccount) {
             if (!Profile.check(acct.address)){
               acct.save(<- Profile.new(), to: Profile.privatePath)
@@ -62,9 +63,22 @@ export default function SignupPage () {
                 .setUsername(username)              
               acct
                 .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setDesc(desc)              
+            } else {
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+                .setEmail(email)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setFullname(fullname)
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+                .setUsername(username)              
+              acct
+                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
                 .setDesc(desc)
-            }
-          }
+            }            
+          }          
         }
       `,
       args: (arg, t) => [
