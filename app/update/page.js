@@ -29,9 +29,7 @@ export default function SignupPage () {
     }
     
     console.log(user)
-    console.log(fullName)
-    
-    
+
     const txnId = await fcl.mutate({
       /*
       cadence: `
@@ -94,10 +92,7 @@ export default function SignupPage () {
     
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+
 
   return (
     <div className="flex items-center justify-center mt-12">
@@ -177,16 +172,14 @@ export default function SignupPage () {
               Avatar
             </label>
             <div className="flex items-center">
-              <input
-                className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="avatar"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-              {selectedFile && (
-               <></>
-              )}
+            <input
+    className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+    id="avatar"    
+     // value={avatar}
+    type="text"
+    placeholder="Paste your Avatar's URL."
+  />
+
             </div>
           </div>
         </div>
