@@ -71,23 +71,8 @@ export default function SignupPage ({params}) {
           prepare(acct: AuthAccount) {
             if (!Profile.check(acct.address)){
               acct.save(<- Profile.new(), to: Profile.privatePath)
-              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setUsername(username)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setAvatar(src)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setFullname(fullname)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-                .setEmail(email)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)              
-            } else {
+              acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)                           
+            } 
               acct
                 .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
                 .setUsername(username)
@@ -103,7 +88,7 @@ export default function SignupPage ({params}) {
               acct
                 .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
                 .setDesc(desc)
-            }            
+                        
           }          
         }
       `,
