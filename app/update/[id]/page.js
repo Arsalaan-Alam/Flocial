@@ -9,6 +9,7 @@ import "@/flow/config";
 
 export default function SignupPage ({params}) {
 
+  const router = useRouter();
   const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
   const [avatar, setAvatar] = useState('')
@@ -16,11 +17,16 @@ export default function SignupPage ({params}) {
   const [desc, setDesc] = useState('')
   const [submitmsg, setSubmitmsg] = useState(false); 
   const [submitMessage, setSubmitMessage] = useState("Processing. Please approve the transaction!");
-
-  
   const [user, setUser] = useState({ addr: ""})
-  const router = useRouter();
-  const newaddr = params.id
+
+ {/*  useEffect(() => {
+    fcl.currentUser.subscribe(setUser);
+  }, []);
+  console.log(user.addr)
+  console.log(params.id)
+  console.log(user.addr == params.id)
+*/}
+ 
 
   const getExistingProfileData = async () => { 
     

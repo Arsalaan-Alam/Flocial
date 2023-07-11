@@ -11,7 +11,7 @@ export default function UserProfile({params}){
 
     const [user, setUser] = useState({ loggedIn: null });
     useEffect(() => fcl.currentUser.subscribe(setUser), []);
-    console.log(user?.addr)
+
 
     const [profile, setProfile] = useState({
         username: "username",
