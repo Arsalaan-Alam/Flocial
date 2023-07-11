@@ -107,7 +107,7 @@ export default function UserProfile({params}){
                             </div>
 
                         <div className="ml-11 mt-2">Description:</div>
-                        <div className="ml-11 mt-2 font-normal text-sm">
+                        <div className="ml-11 mt-2 font-normal text-l">
                         {profile.desc}
                         </div>
                         </div>
