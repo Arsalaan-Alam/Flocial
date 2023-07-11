@@ -8,12 +8,14 @@ import * as fcl from "@onflow/fcl";
 export default function Navbar(){
 
   const [user, setUser] = useState({ loggedIn: null });
+  const [profileAddressHref, setProfileAddressHref] = useState("/");
 
   useEffect(() => {
     const encodedAddress = encodeURIComponent(user?.addr);
-    const profileAddressHref = `/profile/${encodedAddress}`;
+    const updatedProfileAddressHref = `/profile/${encodedAddress}`;
+    setProfileAddressHref(updatedProfileAddressHref);
     if (user.loggedIn) {
-      router.push(profileAddressHref);
+     // router.push(profileAddressHref);
     }
   }, [user.loggedIn]);
 
@@ -58,14 +60,14 @@ export default function Navbar(){
     <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
     
       <li>
-        <a href="/features" class="block py-2 pl-10 pr-4 ml-4 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">Features</a>
+        <a href={profileAddressHref} class="block py-2 pl-10 pr-4 ml-4 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">My Profile</a>
       </li>
    
       <li>
-        <a href="#" class="block py-2 pl-10 pr-4 ml-10 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">Docs</a>
+        <a href="/library" class="block py-2 pl-10 pr-4 ml-10 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">Library</a>
       </li>
       <li>
-        <a href="#" class="block py-2 pl-10 pr-4 ml-10 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">Github</a>
+        <a href="https://github.com/Arsalaan-Alam/Flocial" target="_blank" class="block py-2 pl-10 pr-4 ml-10 mr-5 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-semibold">Github</a>
       </li>
     </ul>
   </div>
