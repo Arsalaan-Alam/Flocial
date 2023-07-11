@@ -20,7 +20,6 @@ export default function UserProfile({params}){
     })
    
     useEffect(() => {        
-        console.log(params.id)
         getProfileData()
     }, [])
 
@@ -45,6 +44,9 @@ export default function UserProfile({params}){
             desc: profile.desc
         })
     }    
+    const encodedAddress = encodeURIComponent(params.id);
+    const updateAddressHref = `/update/${encodedAddress}`;
+
    
     return(
         <div className="flex items-center justify-center mt-12">
@@ -55,7 +57,7 @@ export default function UserProfile({params}){
                         <img src={profile.avatar} alt="profileimg" className=""/>
                        
                         <br></br>
-                      <Link href="/update/"> 
+                      <Link href={updateAddressHref}> 
                             <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
                                 Update Profile
                             </button>

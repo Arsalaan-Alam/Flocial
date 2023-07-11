@@ -7,19 +7,22 @@ import { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
 import "@/flow/config";
 
-export default function SignupPage () {
+export default function SignupPage ({params}) {
 
   const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
   const [avatar, setAvatar] = useState('')
   const [email, setEmail] = useState('')
   const [desc, setDesc] = useState('')
+  const [submitmsg, setSubmitmsg] = useState(false); 
+  const [submitMessage, setSubmitMessage] = useState("Processing. Please approve the transaction!");
+
   
   const [user, setUser] = useState({ addr: ""})
   const router = useRouter();
-  const [selectedFile, setSelectedFile] = useState(null);
+  const newaddr = params.id
 
-  const getExistingProfileData = async (addr) => { 
+  const getExistingProfileData = async () => { 
     
     const profile = await fcl.query({
         cadence: `
@@ -29,7 +32,7 @@ export default function SignupPage () {
             return Profile.read(address)
             }
         `,
-        args: (arg, t) => [arg(addr, t.Address)]
+        args: (arg, t) => [arg(params.id, t.Address)]
     })            
     console.log('Response ', profile)
     setFullName(profile.fullname)
@@ -38,18 +41,18 @@ export default function SignupPage () {
     setDesc(profile.desc)    
     setAvatar(profile.avatar)
 }
-
   useEffect(() => {
-    fcl.currentUser().subscribe((user) => setUser(user));
-    console.log(user.addr)
-    getExistingProfileData(user.addr)
+    getExistingProfileData()
   }, []);
 
   const handleSubmit = async () => {    
-    if (!fullName && !username && !email) {
-      throw new Error('Input empty...');
+    if (!fullName || !username || !email || !avatar || !desc) {
+      setSubmitmsg(true)
+      setSubmitMessage("Please fill in all the required fields.");
+      return;
     }
-    
+    setSubmitmsg(true)
+    setSubmitMessage("Processing. Please approve the transaction!")
     console.log(user)
     //console.log(fullName + ' ' + username + ' ' + email)
 
@@ -112,15 +115,15 @@ export default function SignupPage () {
     })
 
     console.log('TxnID ',txnId)
+    setSubmitMessage("Loading, Please wait!")
     
     const txn = await fcl.tx(txnId).onceSealed()
     //getTxn(txnId)
     console.log(txn)
-    const encodedAddress = encodeURIComponent(user?.addr);
+    const encodedAddress = encodeURIComponent(params.id);
     const profileAddressHref = `/profile/${encodedAddress}`;
-    if (user.loggedIn) {
-      router.push(profileAddressHref);
-    }
+    router.push(profileAddressHref);
+  
     
   };
 
@@ -207,7 +210,7 @@ export default function SignupPage () {
             <input
     className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     id="avatar"    
-    //value={avatar}
+    value={avatar}
     type="text"
     onChange={(e) => setAvatar(e.target.value)}
     placeholder="Paste your Avatar's URL."
@@ -223,14 +226,18 @@ export default function SignupPage () {
  
   <button 
   onClick={handleSubmit}
-  className="bg-transparent hover:bg-blue-500 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
+  className="bg-transparent hover:bg-blue-500 text-blue-600 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 ml-8" type="button">
     Submit
   </button>
-
+ 
 </div>
-</div>  
 
+</div>  
+{submitmsg && (
+            <p className="text-gray-500 mt-5 text-center">{submitMessage}</p>
+          )}
 </form>
+
 
     </div>
 )
