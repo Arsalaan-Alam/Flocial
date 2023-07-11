@@ -14,7 +14,7 @@ export default function UserProfile({params}){
     const [profile, setProfile] = useState({
         username: "username",
         fullname: "Full Name",
-        avatar: "http://example.com",
+        avatar: "https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.jpg",
         email: "full@name.com",
         desc: "Brief description"
     })
