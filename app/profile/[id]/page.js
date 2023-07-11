@@ -9,7 +9,9 @@ import "@/flow/config";
 
 export default function UserProfile({params}){
 
-    //useEffect(() => fcl.currentUser.subscribe(setUser), []);
+    const [user, setUser] = useState({ loggedIn: null });
+    useEffect(() => fcl.currentUser.subscribe(setUser), []);
+    console.log(user?.addr)
 
     const [profile, setProfile] = useState({
         username: "username",
@@ -57,12 +59,13 @@ export default function UserProfile({params}){
                         <img src={profile.avatar} alt="profileimg" className=""/>
                        
                         <br></br>
+                        {user?.addr === params.id && (
                       <Link href={updateAddressHref}> 
                             <button class=" col-span-1 bg-transparent hover:bg-blue-500 text-blue-600 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded font-bold ">
                                 Update Profile
                             </button>
                         </Link>
-                         
+                          )}
                         </div>
                     </div>
                     
