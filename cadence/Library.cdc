@@ -1,13 +1,31 @@
 pub contract Library {    
-    pub var profiles: [{Address: {String: String}}]
 
+   pub struct Profile {
+        pub var username: String
+        pub var fullname: String
+        pub var email: String
+        pub var avatar: String
+        pub var desc: String
+
+        init(username: String, fullname: String, email: String, avatar: String, desc: String) {
+            self.username = username
+            self.fullname = fullname
+            self.email = email
+            self.avatar = avatar
+            self.desc = desc
+        }
+    }
+
+    pub var profiles: [{Address: Profile}]
+
+    
     init() {
         self.profiles = []
     }
 
-    pub fun getProfileByAddress(address: Address): {String: String}? {
+    pub fun getProfileByAddress(address: Address): Profile? {
         for profile in self.profiles {
-            if let data: {String: String} = profile[address] {
+            if let data: Library.Profile = profile[address] {
                 return data
             }
         }
@@ -16,7 +34,7 @@ pub contract Library {
 
     pub fun searchByAddressIndex(address: Address): Int? {     
         for i, profile in self.profiles {
-            let currentProfile: {Address: {String: String}} = self.profiles[i]
+            let currentProfile: {Address: Library.Profile} = self.profiles[i]
             if currentProfile.keys.contains(address) {
                 return i
             }
@@ -24,7 +42,7 @@ pub contract Library {
         return nil
     }
 
-    pub fun addProfile (newProfile: {Address: {String: String}}) {
+    pub fun addProfile (newProfile: {Address: Library.Profile}) {
         let address: Address = newProfile.keys[0]
         let existingProfileIndex: Int? = self.searchByAddressIndex(address: address)        
         if existingProfileIndex != nil {            
@@ -38,7 +56,7 @@ pub contract Library {
         self.profiles.remove(at: index)
     }
 
-    pub fun modifyProfiles(index: Int, newProfile: {Address: {String: String}}) {
+    pub fun modifyProfiles(index: Int, newProfile: {Address: Library.Profile}) {
         self.profiles[index] = newProfile
     }
 }
