@@ -10,6 +10,7 @@ const LibraryPage = () => {
   const walletAddresses = ["0xf29693609c4d4494", "0xb5bd1bfcd1f36235", "0xfac4f77afa0cd121", "0xbb929b5de40a563c"];
   const [profiles, setProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
 
   useEffect(() => {
@@ -30,21 +31,42 @@ const LibraryPage = () => {
 
       const profileData = await Promise.all(profilePromises);
       setProfiles(profileData);
-       setIsLoading(false);
+      setIsLoading(false);
     };
 
     fetchProfiles();
   }, [walletAddresses]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredProfiles = profiles.filter(
+    (profile) =>
+      profile?.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      profile?.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      profile?.desc.toLowerCase().includes(searchQuery.toLowerCase())
+  );
     
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-5 mb-10">
-
+    <div className="">
+      <div className="flex items-center justify-center my-5">
+        <input
+          type="text"
+          placeholder="Search people by their names or description"
+          className="px-4 py-3 bg-gray-100 text-gray-700 border rounded min-w-3/5 outline-none leading-tight focus:outline-none focus:border-gray-500 focus:bg-white text-base"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+        
+      </div>
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-10 mb-10">
 {isLoading ? (
        <div className="flex col-span-3 items-center justify-center mt-20">
        <PacmanLoader color="#4F46E5" />
      </div>
       ) : (
-      profiles.map((profile, index) => (
+        filteredProfiles.map((profile, index) => (
         <div
           key={index}
           className="bg-gray-100 shadow-md rounded-lg p-4 flex flex-col justify-between mt-5"
@@ -69,6 +91,7 @@ const LibraryPage = () => {
         </div>
       ))
       )}
+    </div>
     </div>
   );
 };
