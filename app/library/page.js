@@ -7,21 +7,23 @@ import { PacmanLoader } from "react-spinners";
 
 
 const LibraryPage = () => {
-  const walletAddresses = ["0xf29693609c4d4494", "0xb5bd1bfcd1f36235", "0xfac4f77afa0cd121", "0xbb929b5de40a563c", "0xeead9ebbca30dc2c"];
+  //const walletAddresses = ["0x0fb74b342aea7798", "0xf29693609c4d4494", "0xb5bd1bfcd1f36235", "0xfac4f77afa0cd121", "0xbb929b5de40a563c", "0xeead9ebbca30dc2c"];
+  //const walletAddresses = ["0x0fb74b342aea7798"];
   const [profiles, setProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProfiles, setFilteredProfiles] = useState("");
 
-
+{/*
   useEffect(() => {
     const fetchProfiles = async () => {
       const profilePromises = walletAddresses.map(async (address) => {
         const profile = await fcl.query({
           cadence: `
-            import Profile from 0xf41fd3cb80a5dce4
+            import Library from 0xf41fd3cb80a5dce4
 
-            pub fun main(address: Address): Profile.ReadOnly? {
-              return Profile.read(address)
+            pub fun main(address: Address): Library.Profile {
+              return Library.getProfileByAddress(address)
             }
           `,
           args: (arg, t) => [arg(address, t.Address)],
@@ -37,16 +39,48 @@ const LibraryPage = () => {
     fetchProfiles();
   }, [walletAddresses]);
 
+*/}  
+
+  const getProfileData = async () => {
+    
+    const profileData = await fcl.query({
+      cadence: `
+        import Library from 0xf41fd3cb80a5dce4
+
+        pub fun main(): [{Address: Library.Profile}] {
+          return Library.getAllProfiles()
+        }
+      `,      
+    });
+    console.log(profileData)
+    const transformedData = profileData.map((obj) => {
+      const [address, value] = Object.entries(obj)[0];
+      return { address, ...value };
+    });
+    console.log(transformedData)
+    return transformedData
+  }
+
+  useEffect(async() => {     
+    const profileData = await getProfileData()
+    setProfiles(profileData)  
+    setFilteredProfiles(profileData)
+    setIsLoading(false);
+  },[])
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+    const searchedProfiles = profiles.filter(
+      (profile) =>
+        profile?.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        profile?.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        profile?.desc.toLowerCase().includes(searchQuery.toLowerCase())
+    );    
+    setFilteredProfiles(searchedProfiles)
   };
 
-  const filteredProfiles = profiles.filter(
-    (profile) =>
-      profile?.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      profile?.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      profile?.desc.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  
+  
     
   return (
     <div className="">

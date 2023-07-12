@@ -65,6 +65,7 @@ export default function SignupPage ({params}) {
     const txnId = await fcl.mutate({     
       cadence: `
         import Profile from 0xf41fd3cb80a5dce4
+        import Library from 0xf41fd3cb80a5dce4
         
         transaction (username: String, src: String, fullname: String, email: String, desc: String) {
           
@@ -87,7 +88,13 @@ export default function SignupPage ({params}) {
                 .setEmail(email)
               acct
                 .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)                        
+                .setDesc(desc)    
+            
+                let newProfile: {Address: Library.Profile} = {
+                  acct.address: Library.Profile(
+                    username: username, avatar: src, fullname: fullname, email: email, desc: desc
+                    )}
+                Library.addProfile(newProfile: newProfile)            
           }          
         }
       `,

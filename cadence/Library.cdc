@@ -2,23 +2,22 @@ pub contract Library {
 
    pub struct Profile {
         pub var username: String
-        pub var fullname: String
-        pub var email: String
         pub var avatar: String
+        pub var fullname: String
+        pub var email: String        
         pub var desc: String
 
-        init(username: String, fullname: String, email: String, avatar: String, desc: String) {
+        init(username: String, avatar: String, fullname: String, email: String, desc: String) {
             self.username = username
-            self.fullname = fullname
-            self.email = email
             self.avatar = avatar
+            self.fullname = fullname
+            self.email = email            
             self.desc = desc
         }
     }
 
     pub var profiles: [{Address: Profile}]
-
-    
+        
     init() {
         self.profiles = []
     }
@@ -58,5 +57,9 @@ pub contract Library {
 
     pub fun modifyProfiles(index: Int, newProfile: {Address: Library.Profile}) {
         self.profiles[index] = newProfile
+    }
+
+    pub fun getAllProfiles(): [{Address: Library.Profile}] {
+        return self.profiles
     }
 }

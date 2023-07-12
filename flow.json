@@ -1,5 +1,6 @@
 {
 	"contracts": {
+		"Library": "./cadence/Library.cdc",
 		"Profile": "./cadence/Profile.cdc"
 	},
 	"networks": {
@@ -22,9 +23,16 @@
 		}
 	},
 	"deployments": {
+		"emulator": {
+			"emulator-account": [
+				"Library",
+				"Profile"
+			]
+		},
 		"testnet": {
 			"testnet": [
-				"Profile"
+				"Profile",
+				"Library"
 			]
 		}
 	}
