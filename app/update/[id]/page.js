@@ -87,8 +87,7 @@ export default function SignupPage ({params}) {
                 .setEmail(email)
               acct
                 .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)
-                        
+                .setDesc(desc)                        
           }          
         }
       `,
@@ -114,8 +113,6 @@ export default function SignupPage ({params}) {
     const encodedAddress = encodeURIComponent(params.id);
     const profileAddressHref = `/profile/${encodedAddress}`;
     router.push(profileAddressHref);
-  
-    
   };
 
 
