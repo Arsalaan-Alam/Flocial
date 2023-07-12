@@ -4,7 +4,7 @@ import * as fcl from "@onflow/fcl";
 import "@/flow/config";
 
 const LibraryPage = () => {
-  const walletAddresses = ["0xf29693609c4d4494", "0xb5bd1bfcd1f36235"];
+  const walletAddresses = ["0xf29693609c4d4494", "0xb5bd1bfcd1f36235", "0xfac4f77afa0cd121"];
   const [profiles, setProfiles] = useState([]);
 
 
