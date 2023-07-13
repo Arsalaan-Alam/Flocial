@@ -16,6 +16,7 @@ pub contract Profile {
     pub fun getAvatar(): String
     pub fun getFullname(): String
     pub fun getEmail(): String
+    pub fun getDesc(): String
     
     pub fun setUsername(_ username: String)
     pub fun setAvatar(_ src: String)
@@ -112,7 +113,7 @@ pub contract Profile {
     init() {
         self.publicPath = /public/profile
         self.privatePath = /storage/profile
-    
+        
         self.account.save(<- self.new(), to: self.privatePath)
         self.account.link<&Base{Public}>(self.publicPath, target: self.privatePath)
     

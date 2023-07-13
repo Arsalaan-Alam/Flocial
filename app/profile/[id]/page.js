@@ -27,7 +27,7 @@ export default function UserProfile({params}){
 
     const getProfileData = async () => { 
                
-        const profile = await fcl.query({
+        const profile = await fcl.query({            
             cadence: `
                 import Profile from 0xf41fd3cb80a5dce4
 

@@ -71,24 +71,19 @@ export default function SignupPage ({params}) {
           
           prepare(acct: AuthAccount) {
             if (!Profile.check(acct.address)){
+              if acct.borrow<&Profile.Base>(from: Profile.privatePath) != nil {                
+                let oldobject <- acct.load<@Profile.Base>(from: Profile.privatePath)   
+                destroy oldobject          
+              }              
               acct.save(<- Profile.new(), to: Profile.privatePath)
               acct.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)                           
             } 
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setUsername(username)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setAvatar(src)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setFullname(fullname)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
-                .setEmail(email)
-              acct
-                .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
-                .setDesc(desc)    
+              let profile = acct.borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!                
+              profile.setUsername(username)                           
+              profile.setAvatar(src)              
+              profile.setFullname(fullname)              
+              profile.setEmail(email)              
+              profile.setDesc(desc)    
             
                 let newProfile: {Address: Library.Profile} = {
                   acct.address: Library.Profile(
