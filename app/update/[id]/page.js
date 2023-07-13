@@ -108,7 +108,7 @@ export default function SignupPage ({params}) {
       proposer: fcl.currentUser,
       payer: fcl.currentUser,      
       authorization: [fcl.currentUser],
-      limit: 50
+      limit: 1000
     })
 
     console.log('TxnID ',txnId)
