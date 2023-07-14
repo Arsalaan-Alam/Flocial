@@ -1,6 +1,6 @@
 export default function FeaturesPage(){
     return (
-        <section className="max-w-8xl mx-auto container bg-white dark:bg-gray-900 pt-10">
+        <section className="max-w-8xl mx-auto container bg-white dark:bg-gray-900 pt-5">
   <div>
     <div role="contentinfo" className="flex items-center flex-col">
      
@@ -30,13 +30,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-bold leading-tight text-gray-800 dark:text-white"
           >
-            Feature 1
+            Standardized Uniformity
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+            Flocial establishes a decentralized social networking protocol for Flow, ensuring consistency and uniformity across games, apps, and assets within the Flow ecosystem. Any dApp interested in flocial, can easily integrate it's protocol by interacting with our open sourced smart contract.
           </p>
         </div>
       </div>
@@ -59,13 +59,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white"
           >
-            Feature 2
+            Efficient Profile Management
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+             Flocial's client dApp allows users to connect their wallet addresses and manage their profile details, such as name, username, email, description, and avatar. This information is securely stored on the blockchain, enabling seamless integration with other dApps that utilize Flocial's protocol.
           </p>
         </div>
       </div>
@@ -88,13 +88,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white"
           >
-            Feature 3
+            Enhanced Discoverability & Networking
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Flocial incorporates an explore feature that enables users to browse registered profiles, facilitating social interactions, networking, and collaboration within the Web3 community. Additionally, Flocial's advanced search mechanism allows users to find individuals with specific keywords, fostering efficient collaborations and knowledge sharing.
           </p>
         </div>
       </div>
@@ -117,13 +117,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white"
           >
-            Feature 4
+           Redefining Social dApps on Flow
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Flocial establishes independent social graphs for users on the platform, redefining social networking in the flowverse. Future updates will introduce features such as post publishing, comments, user following, and more, enabling decentralized social interactions and community building on the Flow blockchain.
           </p>
         </div>
       </div>
