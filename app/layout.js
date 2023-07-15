@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: 'Flocial',
-  description: 'First ever DSNP on flow',
+  description: 'First-ever social identity protocol for Flow!',
 }
 
 export default function RootLayout({ children }) {
