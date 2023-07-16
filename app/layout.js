@@ -24,16 +24,3 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
-{/*
-
-export default function RootLayout({ children }) {
-  return (
-    
-    <>
-      <Navbar />
-      <body className={montserrat.className}>{children}</body>
-    </>
-  )
-}
-*/
-}

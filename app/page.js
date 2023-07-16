@@ -1,7 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Head from 'next/head'
+
 import "@/flow/config";
 import { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
