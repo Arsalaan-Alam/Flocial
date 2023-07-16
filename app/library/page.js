@@ -57,6 +57,7 @@ const LibraryPage = () => {
       const [address, value] = Object.entries(obj)[0];
       return { address, ...value };
     });
+    console.log('Profiles : ', transformedData.length)
     console.log(transformedData)
     return transformedData
   }
