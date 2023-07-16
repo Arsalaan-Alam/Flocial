@@ -30,13 +30,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-bold leading-tight text-gray-800 dark:text-white"
           >
-            Standardized Uniformity
+           Redefining Social dApps on Flow
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-            Flocial establishes a decentralized social networking protocol for Flow, ensuring consistency and uniformity across games, apps, and assets within the Flow ecosystem. Any dApp interested in flocial, can easily integrate it's protocol by interacting with our open sourced smart contract.
+            Flocial establishes a decentralized social networking protocol for Flow, redefining social networking in the flowverse. We ensure consistency and uniformity across games, apps, and assets on Flow. Future updates will introduce features such as post publishing, comments, user following, and more.
           </p>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function FeaturesPage(){
       <div
         tabIndex={0}
         aria-label="card 3"
-        className="focus:outline-none flex sm:w-full md:w-5/12 pb-10"
+        className="focus:outline-none flex sm:w-full md:w-5/12 pb-20"
       >
         <div className="w-20 h-20 relative mr-5">
           <div className="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1" />
@@ -101,7 +101,7 @@ export default function FeaturesPage(){
       <div
         tabIndex={0}
         aria-label="card 4"
-        className="focus:outline-none flex sm:w-full md:w-5/12 pb-10"
+        className="focus:outline-none flex sm:w-full md:w-5/12 pb-20"
       >
         <div className="w-20 h-20 relative mr-5">
           <div className="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1" />
@@ -117,13 +117,13 @@ export default function FeaturesPage(){
             tabIndex={0}
             className="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white"
           >
-           Redefining Social dApps on Flow
+           Fast & Easily Integratable API
           </h2>
           <p
             tabIndex={0}
             className="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2"
           >
-            Flocial establishes independent social graphs for users on the platform, redefining social networking in the flowverse. Future updates will introduce features such as post publishing, comments, user following, and more, enabling decentralized social interactions and community building on the Flow blockchain.
+            Flocial currently has 2 fast, low-latency API endpoints. One to get all users registered on the protocol, and one to get profile details by querying wallet address. Any interested dApp can integrate our protocol by using our API or customising our open-sourced smart-contract according to their needs.
           </p>
         </div>
       </div>
